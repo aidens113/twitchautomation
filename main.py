@@ -219,8 +219,8 @@ def setreferer(request):
 
 def sendcaptcha(fileopen):
     try:
-
-        headers = {'authorization': "498616f599fe4c5897cf13555dadc37d"}
+        assemblyaivar = "putyourauthkeyhere"
+        headers = {'authorization':assemblyaivar}
         response = requests.post('https://api.assemblyai.com/v2/upload',headers=headers,data=open(fileopen, 'rb'))
         print(response.json())
 
@@ -232,7 +232,7 @@ def sendcaptcha(fileopen):
         }
 
         headers = {
-            "authorization": "498616f599fe4c5897cf13555dadc37d",
+            "authorization": assemblyaivar,
             "content-type": "application/json"
         }
 
@@ -248,7 +248,7 @@ def sendcaptcha(fileopen):
             endpoint = "https://api.assemblyai.com/v2/transcript/"+str(response.json()['id'])
 
             headers = {
-                "authorization": "498616f599fe4c5897cf13555dadc37d",
+                "authorization":assemblyaivar,
             }
             
             response = requests.get(endpoint, headers=headers)
@@ -264,24 +264,6 @@ def sendcaptcha(fileopen):
             stringtotype = stringtotype+" "+str(words['text'])
             
         return stringtotype.strip().replace(".","").replace("-","").replace(",","")
-        
-        
-        #f = open('recaptcha.png', 'rb')
-        #imgdata = f.read()
-        #f.close()
-
-        #img = base64.b64encode(imgdata)
-        #previousid = ''
-        #if "None" not in myid:
-            #previousid = 'previousID'myid
-
-        #print("PreviousID found. Continuing captcha")
-        #postdata = {'key':'3fd94090a145df3bd4889a46ecfebbf6','method':'post','coordinatescaptcha':'1','canvas':'1',previousid,'textinstructions':'Follow captcha instructions.'}
-        
-        #response = requests.post('http://2captcha.com/in.php', data=postdata, files={'file':open('recaptcha.png','rb')})
-        #myid = response.text.strip()
-        #print("Myid: "+str(myid))
-        #return myid
     except Exception as ee:
         print("Error with sendcaptcha: "+str(ee))
         time.sleep(10)
@@ -367,128 +349,7 @@ def funcaptcha(driver,threadnum):
             
         time.sleep(15)
         return True
-    
-
-def verifyemail(driver, theemail):
-    for _ in range(10):
-        for _ in range(4):
-            try:
-                driver.get("https://account.protonmail.com/login")
-                break
-            except Exception as EEE:
-                print("Error: "+str(EEE))
-        time.sleep(0.1)
-        time.sleep(10)
-        #USERNAME
-        for _ in range(10):
-            try:
-                randkeys(driver.find_element_by_id('username'),"allmyaccounts1",driver)
-                break
-            except Exception as EEr:
-                print("Error clicking user: "+str(EEr))
-                time.sleep(1)
-
-
-        #PASS
-        for _ in range(10):
-            try:
-                randkeys(driver.find_element_by_id('password'),"Amsyvr113",driver)
-                break
-            except Exception as EEr:
-                print("Error clicking pass: "+str(EEr))
-                time.sleep(1)
-
-        time.sleep(0.5)
-
-        press_key(Keys.TAB, driver)
-
-        time.sleep(0.5)
-
-        press_key(Keys.TAB, driver)
-
-        time.sleep(0.5)
-
-        press_key(Keys.SPACE, driver)
-        
-        time.sleep(20)
-                
-        if "/u/0/inbox" in str(driver.current_url) or "/u/1/inbox" in str(driver.current_url):
-            print("Successfully Logged In")
-            break
-
-    #SUBMIT
-    driver.get("https://mail.protonmail.com/u/0/inbox/vQJzbTdjqeuWKpmIYiuBtEPk9sPEu1r9U6Q3S5IZutdcOtM2ZqBko1LONlDAj1g6_DbJu84_XefY69ueClwwlg==")
-    breakl = False
-    for _ in range(10):
-        for _ in range(30):
-            try:
-                driver.find_element_by_xpath("//*[text()[contains(.,'RobloxForum.com')]]").text
-                print("Found email thread")
-                break
-            except Exception as EEEe:
-                print("Error: "+str(EEEe))
-                time.sleep(1)
-        time.sleep(2)
-        
-        try:
-            print("Entering email loop")
-            
-            #FIRST CLICK INIT
-            for thei in range(1,50):
-                try:
-                    driver.find_element_by_xpath(str("/html/body/div[1]/div[3]/div/div/div[2]/div/main/section/div/div/article["+str(thei)+"]")).click()
-                    break
-                except Exception as Eeee:
-                    print("Error: "+str(Eeee))
-                    time.sleep(0.1)
-
-            press_key(Keys.PAGE_UP, driver)
-            time.sleep(0.2)
-            press_key(Keys.PAGE_UP, driver)
-            time.sleep(0.2)
-            press_key(Keys.PAGE_UP, driver)
-            time.sleep(0.2)
-            press_key(Keys.PAGE_UP, driver)
-            time.sleep(0.2)
-                    
-            #NORMAL CYCLE
-            for thei in range(3,50):
-                for _ in range(10):
-                    try:
-                        time.sleep(1)
-                        driver.find_element_by_xpath(str("/html/body/div[1]/div[3]/div/div/div[2]/div/main/section/div/div/article["+str(thei)+"]")).click()
-                        time.sleep(1)
-                        toemail = driver.find_element_by_xpath(str("/html/body/div[1]/div[3]/div/div/div[2]/div/main/section/div/div/article["+str(thei)+"]/div[1]/div[2]/div[1]/div/span[2]/span/span")).text
-                        print(toemail)                              
-                        break
-                    except Exception as EEr:
-                        print("Error clicking email: "+str(EEr))
-                        for _ in range(4):
-                            press_key(Keys.DOWN, driver)
-                        time.sleep(3)
-                
-                
-                
-               
-                if  str(toemail).strip().lower().replace("\r","").replace("\n","") in theemail.strip().lower().replace("\r","").replace("\n",""):
-                    link = str(driver.find_element_by_xpath(str('/html/body/div[1]/div[3]/div/div/div[2]/div/main/section/div/div/article['+str(thei)+']/div[2]/div/table/tbody/tr/td/table/tbody/tr[2]/td/p[2]/a')).get_attribute('href'))
-                    print("Found Link")
-                    time.sleep(1)                            
-                    press_key('t', driver)
-                    for _ in range(4):
-                        try:
-                            print("Link: "+str(link))
-                            driver.get(link)
-                            break
-                        except Exception as EEE:
-                            print("Error: "+str(EEE))
-                    return True
-        except Exception as EE:
-            print("Error: "+str(EE))
-            press_key(Keys.PAGE_UP, driver)
-
-
-    
+   
 
 
 def register(driver,threadnum):
@@ -499,10 +360,7 @@ def register(driver,threadnum):
         pref1 = str(userspossible[random.randint(0,int(len(userspossible)-1))]).strip().replace("\n","").replace("\r","")
         pref2 = str(userspossible[random.randint(0,int(len(userspossible)-1))]).strip().replace("\n","").replace("\r","")
         username = str(pref1+pref2+str(random.randint(99,9999))).strip().replace("\n","").replace("\r","")
-    
-
-        #domains = ['@accounthaven.net','@seo-tips.tech','@realcoolmail.space','@coolcloudmail.space','@email-lists.store','@cool-mail.space','@onecoolpost.space','@premiummail.site','@news-network.press']
-        #random.randint(0,int(len(domains)-1))
+   
         domains = ["@gmail.com","@yahoo.com","@outlook.com"]
         email = str(username+str(domains[random.randint(0,int(len(domains)-1))]))
         user = str(email.split("@")[0].strip().replace("\n","").replace("\r","")).replace(" ","").replace("-","")
@@ -653,43 +511,24 @@ def register(driver,threadnum):
         
                 
         if breakl == False:
-            #for _ in range(60):
-            #    try:
-            #        driver.find_element_by_xpath("//*[text()[contains(.,'Skip')]]").click()
-            #        break
-            #    except Exception as EEEe:
-            #        print("Error: "+str(EEEe))
-            #        time.sleep(2)
-
-            for _ in range(4):
-                try:
-                    driver.get(urltovisit)
-                    break
-                except Exception as EEe:
-                    print("Error: "+str(EEe))
-                    time.sleep(1)
-
-
-            for _ in range(4):
-                try:
-                    driver.get(urltovisit)
-                    break
-                except Exception as EEe:
-                    print("Error: "+str(EEe))
-                    time.sleep(1)
             
+            for _ in range(4):
+                try:
+                    driver.get(urltovisit)
+                    break
+                except Exception as EEe:
+                    print("Error: "+str(EEe))
+                    time.sleep(1)
 
-            #for _ in range(20):
-            #    try:
-            #        if len(str(driver.find_element_by_id('g-recaptcha-response').text)) >= 5:
-             #           print("Finished Recaptcha")
-             #           break
-            #        else:
-            #            time.sleep(3)
-            #    except Exception as EEEe:
-            #        print("Error: "+str(EEEe))
-            #        time.sleep(3)
 
+            for _ in range(4):
+                try:
+                    driver.get(urltovisit)
+                    break
+                except Exception as EEe:
+                    print("Error: "+str(EEe))
+                    time.sleep(1)
+           
             time.sleep(1)
             successaccount1 = True
         
@@ -1067,8 +906,8 @@ def startthreads(groups):
 
     
 print("""
-WELCOME TO TWITCH LIVE CHAT SPAMMER & LEADS V.1
-SPAM TWITCH.COM WITH LINKS AND "SUPPORTERS"
+WELCOME TO TWITCH LIVE CHAT LEADS V.1
+MESSAGE TWITCH.COM WITH LINKS AND "SUPPORTERS"
 -
 """)
 urltovisit = "https://twitch.tv"
@@ -1086,9 +925,7 @@ while True:
         print("Invalid input, please try again")
 
 
+print("Beginning LIVE CHAT LEADS V.1")
 startthreads(threadstodo)
-#driver = initdriver("megaproxy.rotating.proxyrack.net:222")
-#time.sleep(60)
-#spamforums(driver)
-print("Beginning SPAM")
+
     
