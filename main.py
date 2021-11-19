@@ -729,7 +729,7 @@ def spam(groupnumber,secondurl):
         threadnum = int(int(groupnumber * 3) + 1)
         for i in range(len(allaccounts)):
             account = allaccounts[int(int(groupnumber * i) + 1)]
-            driver = initdriver("megaproxy.rotating.proxyrack.net:222",threadnum)    
+            driver = initdriver("",threadnum)    
             driver.request_interceptor = setreferer
 
             #register(driver,threadnum)
@@ -755,7 +755,7 @@ def supporter(user,messages,groupnumber,secondurl):
         groupnumber += 1
         thei = 0
         threadnum = int(int(groupnumber * 3))
-        driver = initdriver("megaproxy.rotating.proxyrack.net:222",threadnum)    
+        driver = initdriver("",threadnum)    
         driver.request_interceptor = setreferer
         
         while True:
